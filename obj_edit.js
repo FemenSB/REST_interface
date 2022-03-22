@@ -2,12 +2,13 @@ const obj_div = document.getElementById('obj_div');
 const new_prop_button = document.getElementById('new_prop_button');
 var properties = [];
 
-function property(name, value, checker, label, button, index) { // Object for the body's properties input
+function property(name, value, checker, label, separator, button, index) { // Object for the body's properties input
   // DOM elements:
   this.name = name;
   this.value = value;
   this.checker = checker;
   this.label = label;
+  this.separator = separator;
   this.button = button;
   this.br = document.createElement('br');
   // This object's index in the properties[] array:
@@ -24,8 +25,20 @@ function property(name, value, checker, label, button, index) { // Object for th
     this.checker.type = 'checkbox';
     this.label.for = 'check_' + this.index;
     this.label.innerHTML = 'array';
+    this.separator.id = 'separator_' + this.index;
+    this.separator.style.visibility = 'collapse';
+    this.separator.size = 1;
+    this.separator.value = ',';
     this.button.innerHTML = 'remove';
+
     this.button.addEventListener('click', this.remove_prop);
+    this.checker.addEventListener('change', () => {
+      if(this.checker.checked) {
+        this.separator.style.visibility = 'visible';}
+      else {
+        this.separator.style.visibility = 'collapse';
+      }
+    });
   };
 
   this.addToDocument = () => { // Append all its DOM elements to the document
@@ -33,6 +46,7 @@ function property(name, value, checker, label, button, index) { // Object for th
     obj_div.appendChild(this.value);
     obj_div.appendChild(this.checker);
     obj_div.appendChild(this.label);
+    obj_div.appendChild(this.separator);
     obj_div.appendChild(this.button);
     obj_div.appendChild(this.br);
   };
@@ -66,7 +80,8 @@ function new_prop() {
   // Instantiate a new property object and add it to properties[]
   properties.push(new property(document.createElement('input'), document.createElement('input'),
                                document.createElement('input'), document.createElement('label'),
-                               document.createElement('button'), properties.length));
+                               document.createElement('input'), document.createElement('button'),
+                               properties.length));
 
   properties[properties.length - 1].setAttributes(); // Set DOM elements
   properties[properties.length - 1].addToDocument(); // Add DOM elements to document
@@ -78,7 +93,12 @@ function generateObj() { // Create and return the object defined by this interfa
   obj = {};
 
   properties.forEach((prop) => {
-    obj[prop.name.value] = prop.value.value;
+    if(prop.checker.checked) { // If this property is an array
+      obj[prop.name.value] = prop.value.value.split(prop.separator.value); // Split the array values by given separator
+    } else { // If this property is not an array
+      obj[prop.name.value] = prop.value.value; // Just set property value
+    }
+
   });
 
   return obj;

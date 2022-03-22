@@ -2,10 +2,7 @@ const address_input = document.getElementById('address_input');
 const method_select = document.getElementById('method_select');
 const send_button = document.getElementById('send_button');
 
-var body_obj = {
-    title: 'A Dream of Spring',
-    author: 'George R. R. Martin'
-  };
+var body_obj = {};
 
 const methods = {
   GET: async () => {
@@ -47,5 +44,6 @@ const methods = {
 };
 
 send_button.addEventListener('click', (e) => {
+  body_obj = generateObj();
   methods[method_select.value]();
 });

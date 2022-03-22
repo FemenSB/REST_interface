@@ -14,8 +14,20 @@
     </select>
     <button type="button" id="send_button">Request</button>
 
-    <script src="./rest.js"></script>
     <br><br>
-    Set the variable body_obj through console to set your request content
+
+    <div>
+      <div id="obj_div" style="width:100%;background-color:lightblue;">
+        Request body (object sent as JSON)
+        <br>
+      </div>
+      <button type="button" id="new_prop_button">+ New property</button>
+      <div id="res_div" style="width:100%;">
+        Response body
+      </div>
+    </div>
+
+    <script src="./rest.js"></script>
+    <script src="./obj_edit.js"></script>
   </body>
 </html>

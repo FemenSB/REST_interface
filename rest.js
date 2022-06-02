@@ -28,9 +28,9 @@ const methods = {
         'Content-Type': 'application/json'
       }
     });
-    var myJson = await response.json();
+    var data = await response.json();
     showData(data);
-    console.log(myJson);
+    console.log(data);
   },
 
   PUT: async () => {
@@ -41,16 +41,16 @@ const methods = {
         'Content-Type': 'application/json'
       }
     });
-    var myJson = await response.json();
+    var data = await response.json();
     showData(data);
-    console.log(myJson);
+    console.log(data);
   },
 
   DELETE: async () => {
     var response = await fetch(address_input.value, {method: 'DELETE'});
-    var myJson = await response.json();
+    var data = await response.json();
     showData(data);
-    console.log(myJson);
+    console.log(data);
   }
 
 };
